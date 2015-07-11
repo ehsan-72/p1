@@ -1,0 +1,545 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <title>Chat</title>
+    <link rel="stylesheet" type="text/css" href="static/semantic/semantic.min.css" />
+    <link rel="stylesheet" type="text/css" href="static/css/style.css" />
+
+    <!--<script src="https://cdn.socket.io/socket.io-1.2.0.js"></script>
+    <script src="http://code.jquery.com/jquery-1.11.1.js"></script> -->
+    <script src="/socket.io/socket.io.js"></script> 
+    <script src="moment.js"></script> 
+</head>
+<body>
+	<div class="ui modal">
+	  <!--<i class="close icon"></i>-->
+	  <div class="header">
+	    Chat
+	  </div>
+	  <div class="content">
+	    <div class="ui image">
+	      <img src="static/avatars/2.jpg">
+	    </div>
+	    <div class="description">
+	      	  <div id='abcd' class="ui header">Login</div>
+	     
+		  <form id='firstform' class="ui form segment">
+		    <div class="two fields">
+		      <div id="namefield" class="required field">
+			<label>Name</label>
+			<input id="name" placeholder="First Name" name="name" type="text">
+		      </div>
+		      <div id="usernamefield" class="required field">
+			<label>User Name</label>
+			<input id="username" placeholder="Last Name" name="username" type="text">
+		      </div>
+		    </div>
+                  
+		   <div id='formerror' class="ui  message red hidden">
+                     <ul>                       
+                     </ul>
+                   </div>
+		     
+		  </form>
+
+
+	    </div>
+	  </div>
+          
+	  <div class="actions" >
+	    <!--<div id='t1' class="ui black deny button">
+	      cancell
+	    </div> -->
+	    <div id='t2' class="ui positive right labeled icon button">
+	      Log In
+	      <i class="checkmark icon"></i>
+	    </div>
+	  </div>
+	</div>
+
+
+
+    <div id="container" class="ui grid">
+
+        <div id="friends-list" class="five wide column">
+            <div class="ui raised stacked segment" id="user-info">
+                <h2 class="ui icon center aligned header">
+                    <img src="static/avatars/2.jpg" class="ui circular image">
+                    <div class="content">
+                        Welcome, ((fullname))!<br/>
+                        <div class="sub header">@username</div>
+                    </div>
+                </h2>
+            </div>
+
+            <div class="ui vertical menu left" id="roster">
+                <div class="item">
+                    <div class="ui transparent icon input">
+                        <input id='ttt' type="text" placeholder="Add a friend...">
+                        <i class="user icon" id='addfriend'></i>
+                    </div>
+                </div>
+		<div id="ermsg" class="ui negative message item hidden">
+		  <i class="close icon"></i>
+		  <div class="header">
+		    We're sorry we can't apply that discount!
+			  </div>
+		  <p>username does not exist.
+		</p></div>
+		<!--
+		<a class="grey item" data-tab="username" >
+		  username
+		  <div class="ui blue label">1</div>		
+		</a>
+		<a class="grey item" data-tab="username2" style="background-color:#0F0;">
+		  username
+		  <div class="ui label" >#msg</div>		
+		</a>
+		
+		</br>
+		
+		
+                <!--
+                <a class="active green item">
+                    sadjad
+                </a>
+                <a class="active green item">
+                    janedoe
+                    <div class="ui blue label">1</div>
+                </a>
+                <a class="blue item">
+                    johnsmith
+                </a>
+                <a class="blue item">
+                    erlich
+                </a>
+                <a class="blue item">
+                    jian.yang
+                </a> -->
+            </div>
+	    
+        </div>
+       
+        <div id="messages-pane" class="eleven wide column">
+
+
+	  <div class="ui tab segment active" data-tab="default">
+	    <div class="ui equal width center aligned padded grid">
+	      <div class="eleven row">		
+	      </div>
+	      <div class="row">
+	      </div>
+  	      <div class="row">
+	      </div>
+	      <div class="row">
+	      </div>
+	      <div class="row" style="background-color: #869D05;color: #FFFFFF;">
+	        <div class="column">select a friend to see conversations.</div> 
+	      </div>
+       	      <div class="row">
+	      </div>
+	      <div class="row">
+	      </div>
+	      <div class="row">
+	      </div>
+	      <div class="row">
+	      </div>
+	   </div>
+         </div>
+
+	
+         <div id='template' class="ui tab segment" data-tab="username">
+           <div id="message-header">
+                <h2 class="ui header">
+                    <i class="comments icon"></i>
+                    <div class="content">
+                        Conversation with @username
+                        <div class="sub header">status</div>
+                    </div>
+                </h2>
+            </div>
+	
+            <div id="messages">
+                <div class="ui minimal comments">
+                    <div class="comment">
+                        <a class="avatar">
+                            <img src="static/avatars/2.jpg">
+                        </a>
+                        <div class="content">
+                            <a class="author">name</a>
+                            <div class="metadata">
+                                <span class="date">Today at 5:42PM</span>
+                            </div>
+                            <div class="text">
+                                msg
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="message-form-container">
+                <form class="ui form">
+                    <div class="ui action input">
+                        <input type="text" placeholder="Your message here..." dir="auto">
+                        <div class="ui green icon button">
+                            <i class="send icon"></i> &nbsp;Send
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>	
+
+      </div>
+      
+    </div>
+    <script src="static/js/jquery-2.1.4.min.js"></script>
+    <script src="static/semantic/semantic.min.js"></script>
+<script>
+//$('.ui.modal').modal('show');
+function notifyMe(msg) {
+  // Let's check if the browser supports notifications
+  if (!("Notification" in window)) {
+    alert("This browser does not support desktop notification");
+  }
+
+  // Let's check whether notification permissions have alredy been granted
+  else if (Notification.permission === "granted") {
+    // If it's okay let's create a notification
+    var notification = new Notification(msg.sender +' sent you message.');
+  }
+
+  // Otherwise, we need to ask the user for permission
+  else if (Notification.permission !== 'denied') {
+    Notification.requestPermission(function (permission) {
+      // If the user accepts, let's create a notification
+      if (permission === "granted") {
+        var notification = new Notification(msg.sender +' sent you message.');
+      }
+    });
+  }
+
+  // At last, if the user has denied notifications, and you 
+  // want to be respectful there is no need to bother them any more.
+}
+
+
+$(document).ready(function(){
+//var d=Date.now();
+//d=d-100000000;
+//alert(moment(d).calendar());
+
+  //$("#template").clone().attr({'id':'newId', 'data-tab':'username2'}).appendTo('#messages-pane');
+  //var t=conversation.attr({'id':'nusername','data-tab':'nusername'}).html().replace('username','nusername');//.appendTo('#messages-pane');
+  //$('#messages-pane').append(t);
+  //$('.menu .item').tab();
+  var socket=io();
+  var I={};
+  $('.ui.modal').modal({ 
+  closable:false,
+  onApprove : function() { 
+    
+    //Validate here, or pass validation to somewhere else
+    $('.ui.form #namefield').removeClass("error");
+    $('.ui.form #usernamefield').removeClass("error");
+    $('#formerror').addClass('hidden');
+    $('#formerror').find('ul').empty();
+    //alert($('#formerror ul').html());
+    if (!$('.ui.form #name').val()) {
+            $('.ui.form #namefield').addClass("error");            
+            $('#formerror ul').append($('<li>',{text:"Please Enter Your Name."}));
+            $('#formerror').removeClass('hidden');
+    	if (!$('.ui.form #username').val()) {
+           	 $('.ui.form #usernamefield').addClass("error");
+		 $('#formerror ul').append($('<li>',{text:"Please Enter Username."}));
+                 $('#formerror').removeClass('hidden');
+	}
+	     return false;
+    }
+    if (!$('.ui.form #username').val()) {	    
+            $('.ui.form #usernamefield').addClass("error");
+            $('.ui.form #usernamefield').focus();
+ 	    $('#formerror ul').append($('<li>',{text:"Please Enter Username."}));
+            $('#formerror').removeClass('hidden');
+	    return false;
+	}   
+       
+    $('#t2').addClass('loading');
+    var dataJs = {  Name:$('.ui.form #name').val(),
+                    UserName:$('.ui.form #username').val()};
+    socket.emit('login',dataJs);
+    //return true;
+    /*setTimeout(function(){
+      //$('#t2').removeClass('loading');
+      socket.disconnect();
+      $('#namefield input').val('');
+      $('#usernamefield input').val('');
+      },5000);*/
+  
+
+    
+    return false; //Return false as to not close modal dialog 
+    } ,
+   onDeny : function() { 
+      //alert('ok');
+      return false;
+   }
+  }).modal('show');
+  socket.on('loginResponse',function(response){    
+    
+    if(response.succeed){      
+      var info=response.data;
+      I=info;
+      $('#user-info .content').text(function(){
+        return $(this).text().replace('((fullname))',info.Name).replace('username',info.UserName);
+      });    
+      var friend={};
+      for (var i=0;i<info.friends.length;i++){
+        var conversation=$('#template').clone();
+        var message=conversation.find('#messages').children().children().remove();
+        var newmsg=conversation.find('#message-form-container').remove();
+        friend=info.friends[i];
+        $('#roster').append(
+          $('<a>',{'text':friend.Name,'class':'grey item','data-tab':friend.UserName,style:(friend.status.online?'background-color:#0F0;':'')})
+        );
+        if(friend.status.online)
+          conversation.append(newmsg);
+        conversation.attr({'id':friend.UserName,'data-tab':friend.UserName}).html(function(){
+           return $(this).html().replace('username',friend.UserName);});
+        if(friend.status.online) 
+           conversation.find('#message-header div.header').attr('style','color:blue').text('Online');
+        else
+           conversation.find('#message-header div.header').attr('style','').text('Offline( last seen: '+moment(friend.status.lastseen).calendar()+' )');
+        conversation.appendTo('#messages-pane');
+/*
+<div id="message-header">
+                <h2 class="ui header">
+                    <i class="comments icon"></i>
+                    <div class="content">
+                        Conversation with @username
+                        <div class="sub header">status</div>
+                    </div>
+                </h2>
+            </div>
+*/
+       
+//	                        .replace('status',
+//		friend.status.online?'<p style="color:blue"> Online </p>':'Offline( last seen: '+moment(friend.status.lastseen).calendar()+' //)');
+//        }).appendTo('#messages-pane');
+  ////      //$('#messages-pane').append(conversation);
+      }
+      $('.menu .item').tab();
+      $('.ui.modal').modal("hideDimmer");
+    }
+    else{      
+      $('#t2').removeClass('loading');
+      $('#namefield input').val('');
+      $('#namefield input').focus();
+      $('#namefield input').addClass('error');      
+      $('#formerror ul').append($('<li>',{text:response.msg}));
+      $('#formerror').removeClass('hidden');      
+    }  
+  });
+  $(document).on('click','#message-form-container .button',function(event){
+    var input=$(this).parent().find('input');
+    if (input.val()){
+       var msg={};
+       msg.sender=I.UserName;
+       //var $rec=$('#messages-pane').find('div[class*="active"]');
+       var $rec=$(this).parent().parent().parent().parent();
+       msg.recipient=$rec.attr('id');
+       msg.date=Date.now();
+       msg.m=input.val();
+       socket.emit('message',msg);
+       input.val('');
+       var comment=$('#template #messages .comment').clone();
+       comment.find('.date').text(moment(msg.date).calendar()); 
+       comment.find('.author').text(I.UserName);       
+       comment.find('.text').text(msg.m);       
+       var $test=$rec.find('#messages');
+       $rec.find('#messages .comments').append(comment);
+    }
+  });
+  $(document).on('keypress','#message-form-container input',function(event){
+     var keycode = (event.keyCode ? event.keyCode : event.which);
+	if(keycode == '13'){
+		$(this).parent().find('.button').click();
+                 //event.stopPropagation();
+                 event.preventDefault();
+	}
+  });
+  socket.on('message',function(msg){
+    var $sender=$('#roster').find('a[data-tab="'+msg.sender+'"]');
+    //alert($sender.html());
+    if (!$sender.hasClass('active')){    
+       if ($sender.children('div').length>0){            
+          $sender.children('div').text(function(){          
+          return (parseInt($(this).text())+1).toString()
+          });
+       }        
+       else{          
+          $sender.append(
+            $('<div>',{'class':'ui blue label','text':'1'})
+          );
+	  notifyMe(msg);
+       }
+    }
+    /*var $active=$('#messages-pane').find('div[class*="active"]');
+    if ($active.attr('id')!=msg.sender){
+       alert('khob');
+       var m=$('#roster a[data-tab="'+msg.sender+'"] div');
+       alert(m.text());
+       var n=0;
+       if(m.text())
+          alert(m.text());
+          n=parseInt(m.text());
+       n++;
+       m.text(n.toString());
+    }*/
+    var $sendpane=$('#messages-pane').find('div[id="'+msg.sender+'"]');
+    var comment=$('#template #messages .comment').clone();
+    comment.find('.date').text(moment(msg.date).calendar()); 
+    comment.find('.author').text(msg.sender);
+    comment.find('.text').text(msg.m);
+    comment.find('img').attr('src',function(){
+      return $(this).attr('src').replace('2','4');
+    });
+    $sendpane.find('#messages .comments').append(comment);
+    
+  });
+  var addFriend=function(){
+    var username=$('#roster input');    
+    if(username.val()){   
+      $('#ermsg ').addClass('hidden');   
+      socket.emit('addFriend',username.val());
+      username.val('');
+    }
+  }
+  
+  $('#roster input').keypress(function(event){
+	var keycode = (event.keyCode ? event.keyCode : event.which);
+	if(keycode == '13'){
+		addFriend();
+	}
+ 
+  });
+
+  
+  $('#firstform').keypress(function(event){
+	var keycode = (event.keyCode ? event.keyCode : event.which);
+	if(keycode == '13'){
+		$('#t2').click();
+                event.stopPropagation();
+                event.preventDefault();
+	}
+ 
+  });
+  $('#addfriend').click(addFriend);
+  $(document).on('click','#roster a',function(){
+    $(this).children('div').remove();
+  });
+  socket.on('addFriendResponse',function(data){
+    info=data.Data;
+    if(info){
+        var conversation=$('#template').clone();
+        var message=conversation.find('#messages').children().children().remove();
+        var newmsg=conversation.find('#message-form-container').remove();    
+        //alert(info.online);    
+        $('#roster').append(
+          $('<a>',{'text':info.Name,'class':'grey item','data-tab':info.UserName,style:(info.status.online?'background-color:#0F0;':'')})
+        );
+        //alert(info.Name);
+        if(info.status.online)
+          conversation.append(newmsg);
+          conversation.attr({'id':info.UserName,'data-tab':info.UserName}).html(function(){
+            return $(this).html().replace('username',info.UserName);});
+        if(info.status.online) 
+           conversation.find('#message-header div.header').attr('style','color:blue').text('Online');
+        else
+           conversation.find('#message-header div.header').attr('style','').text('Offline( last seen: '+moment(info.status.lastseen).calendar()+' )');
+        conversation.appendTo('#messages-pane');/*.replace('username',info.UserName)
+	    .replace('status',
+	    info.status.online?'<p style="color:blue"> Online </p>':'Offline( last seen: '+moment(info.status.lastseen).calendar()+' )');
+        }).appendTo('#messages-pane');
+	*/
+        //$('#messages-pane').append(conversation);
+        $('.menu .item').tab();
+
+      
+    }
+
+    else{
+        $('#ermsg p').text(data.msg);
+      	$('#ermsg').removeClass('hidden');              
+    }
+  });
+  socket.on('added',function(info){
+    var conversation=$('#template').clone();
+    var message=conversation.find('#messages').children().children().remove();
+    var newmsg=conversation.find('#message-form-container').remove();        
+    $('#roster').append(
+       $('<a>',{'text':info.Name,'class':'grey item','data-tab':info.UserName,style:(info.status.online?'background-color:#0F0;':'')})
+    );
+    //alert(info.Name);
+    if(info.status.online)
+      conversation.append(newmsg);
+    conversation.attr({'id':info.UserName,'data-tab':info.UserName}).html(function(){
+      return $(this).html().replace('username',info.UserName);});
+    if(info.status.online) 
+         conversation.find('#message-header div.header').attr('style','color:blue').text('Online');
+    else
+        conversation.find('#message-header div.header').attr('style','').text('Offline( last seen: '+moment(info.status.lastseen).calendar()+' )');
+    //alert(moment(info.status.lastseen).calendar());
+    conversation.appendTo('#messages-pane');/*.replace('username',info.UserName)
+	.replace('status',
+	 info.status.online?'<p style="color:blue"> Online </p>':'Offline( lastseen:'+moment(info.status.lastseen).calendar()+')');
+    }).appendTo('#messages-pane');*/
+    //$('#messages-pane').append(conversation);
+    $('.menu .item').tab();
+  });
+
+
+
+  socket.on('friendleft',function(info){
+    
+    //alert(info.status);
+    username=info.UserName;
+    $('#roster').find('a[data-tab="'+username+'"]').attr('style','');
+    var friend=$('#messages-pane').find('div[id="'+username+'"]');
+    alert(info.status.lastseen);
+    friend.children('#message-header').find('div.header').attr('style',' ').text('Offline(lastseen '+moment(info.status.lastseen).calendar()+')');
+    friend.children('#message-form-container').remove();
+  });
+  socket.on('friendcome',function(username){
+    //alert('come');
+    var conversation=$('#template').clone();
+    var newmsg=conversation.find('#message-form-container').remove();
+    $('#roster').find('a[data-tab="'+username+'"]').attr('style','background-color:#0F0;');
+    var friend=$('#messages-pane').find('div[id="'+username+'"]');
+    friend.children('#message-header').find('div.header').attr('style','color:blue').text('Online');
+    friend.append(newmsg);
+  });
+  
+
+});
+$('#ermsg .close')
+          .on('click', function(event) {
+            $(this)
+              .closest('.message')
+              .transition('fade')
+           ;
+            //alert($(this).parent().html());
+           $(this).parent().removeClass('visible');
+           $(this).parent().addClass('hidden');
+           $(this).parent().parent().find('input').focus();
+            event.stopPropagation();
+            event.preventDefault();
+         })
+       ;
+
+</script>
+
+</body>
+</html>

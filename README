@@ -1,0 +1,26 @@
+Dependencies as mentioned in package.json are :
+
+  "dependencies": {
+    "express": "^4.10.2",    
+    "socket.io": "^1.3.5"
+  }
+
+for run :
+open command line go to project directory type:
+node index.js
+
+now server is running;
+open the browser and type localhost:1200 you should see the login form;
+
+for adding friends type their username and add them;
+if a friend is online background color of his/her name in left menu is green and his/her status in chat conversation segment is Online ,
+and if is Offline his/her background color is white and status is Offline and you can see lastseen in head of conversation history ;
+if conversation segment of a friend is not open and he/she message you a number appear in front of his/her name that show number
+of unreaded messages and you get a desktop notification;
+
+++(lastseen and desktop notification of bonus point is implemented.)++
+
+Thanks.
+
+
+

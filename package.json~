@@ -1,0 +1,16 @@
+{
+  "name": "chat",
+  "version": "1.0.0",
+  "description": "a chat webprogram for web project3",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Ehsan",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.10.2",
+    "moment": "^2.10.3",
+    "socket.io": "^1.3.5"
+  }
+}
